@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanban Board</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-[#f8f9fa] flex flex-col items-center py-12">
+  
+  <h1 class="text-2xl font-bold text-gray-800 mb-8">Simple Kanban Board</h1>
+  
+  <div class="flex gap-6">
+    <div class="bg-[#e2e3e5] w-72 rounded-lg p-4 min-h-[400px] flex flex-col">
+      <h2 class="text-center font-bold text-gray-700 mb-4">To Do</h2>
+      <div class="task-list flex flex-col gap-3 flex-1">
+        <div class="task bg-white px-4 py-3 rounded shadow-sm text-center text-sm font-medium text-gray-700 cursor-grab active:cursor-grabbing" draggable="true">
+          Wash Dishes
+        </div>
+      </div>
+    </div>
+    
+    <div class="bg-[#e2e3e5] w-72 rounded-lg p-4 min-h-[400px] flex flex-col">
+      <h2 class="text-center font-bold text-gray-700 mb-4">In Progress</h2>
+      <div class="task-list flex flex-col gap-3 flex-1">
+        <div class="task bg-white px-4 py-3 rounded shadow-sm text-center text-sm font-medium text-gray-700 cursor-grab active:cursor-grabbing" draggable="true">
+          Buy Groceries
+        </div>
+      </div>
+    </div>
+    
+    <div class="bg-[#e2e3e5] w-72 rounded-lg p-4 min-h-[400px] flex flex-col">
+      <h2 class="text-center font-bold text-gray-700 mb-4">Done</h2>
+      <div class="task-list flex flex-col gap-3 flex-1">
+        <div class="task bg-white px-4 py-3 rounded shadow-sm text-center text-sm font-medium text-gray-700 cursor-grab active:cursor-grabbing" draggable="true">
+          Learn to code
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const tasks = document.querySelectorAll('.task');
+    const taskLists = document.querySelectorAll('.task-list');
+    
+    let draggedTask = null;
+
+    tasks.forEach(task => {
+      task.addEventListener('dragstart', () => {
+        draggedTask = task;
+        setTimeout(() => task.classList.add('opacity-50'), 0);
+      });
+
+      task.addEventListener('dragend', () => {
+        draggedTask = null;
+        task.classList.remove('opacity-50');
+      });
+    });
+
+    taskLists.forEach(list => {
+      list.addEventListener('dragover', e => {
+        e.preventDefault();
+      });
+
+      list.addEventListener('drop', () => {
+        if (draggedTask) {
+          list.appendChild(draggedTask);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
